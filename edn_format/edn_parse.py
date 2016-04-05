@@ -19,6 +19,9 @@ if sys.version_info[0] == 3:
 if tokens:
     pass
 
+class Discard():
+    pass
+
 start = 'expression'
 
 _serializers = dict({})
@@ -72,6 +75,11 @@ def p_list(p):
     p[0] = tuple(p[2])
 
 
+def p_discard(p):
+    """discard : DISCARD expression"""
+    p[0] = Discard
+
+
 def p_empty_set(p):
     """set : SET_START MAP_OR_SET_END"""
     p[0] = frozenset()
@@ -111,7 +119,8 @@ def p_expression(p):
                   | list
                   | set
                   | map
-                  | term"""
+                  | term
+                  | discard"""
     p[0] = p[1]
 
 

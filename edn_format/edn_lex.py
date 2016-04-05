@@ -95,6 +95,7 @@ tokens = ('WHITESPACE',
           'VECTOR_END',
           'LIST_START',
           'LIST_END',
+          'DISCARD',
           'MAP_START',
           'SET_START',
           'MAP_OR_SET_END',
@@ -133,7 +134,7 @@ KEYWORD = (":"
            "|"
            "[{all}]+"
            ")").format(**PARTS)
-TAG = (r"\#"
+TAG = (r"\#(?!_)"
        r"\w"
        "("
        "[{all}]*"
@@ -150,6 +151,7 @@ t_LIST_END = r'\)'
 t_MAP_START = r'\{'
 t_SET_START = r'\#\{'
 t_MAP_OR_SET_END = r'\}'
+t_DISCARD = r'\#_'
 t_ignore = ''.join([" ", "\t", "\n", ","])
 
 
@@ -217,11 +219,6 @@ def t_INTEGER(t):
 
 def t_COMMENT(t):
     r'[;][^\n]*'
-    pass  # ignore
-
-
-def t_DISCARD(t):
-    r'\#_\S+\b'
     pass  # ignore
 
 
